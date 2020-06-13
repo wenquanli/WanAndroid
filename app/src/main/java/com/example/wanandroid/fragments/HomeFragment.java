@@ -1,10 +1,6 @@
 package com.example.wanandroid.fragments;
 
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.wanandroid.Constant.Constant;
 import com.example.wanandroid.R;
@@ -16,11 +12,9 @@ import com.example.wanandroid.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter> implements Contract.IMainView{
@@ -58,19 +52,28 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
             mMainBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
 
             //获取图片路径
-            List<String> images = bean.getData()
-                    .stream()
-                    .map(BannerBean.DataBean::getImagePath)
-                    .collect(Collectors.toList());
+//            List<String> images = bean.getData()
+//                    .stream()
+//                    .map(BannerBean.DataBean::getImagePath)
+//                    .collect(Collectors.toList());
+
+            ArrayList<String> images = new ArrayList<>();
+            List<String> titles = new ArrayList<>();
+            List<BannerBean.DataBean> data = bean.getData();
+            for (int i = 0; i < data.size(); i++) {
+                images.add(data.get(i).getImagePath());
+                titles.add(data.get(i).getTitle());
+            }
 
             mMainBanner.setImages(images);
 
             //获取title
-
-            List<String> titles = bean.getData()
-                    .stream()
-                    .map(BannerBean.DataBean::getTitle)
-                    .collect(Collectors.toList());
+            // TODO lambda 表达式虽然很简单，但不应该以此去浪费 SDK 版本 24 以下的用户，
+            //  而且这里实际上多执行了一次循环是没必要的，Java 和 Kotlin 这里应该都有正确的 lambda 去做过率
+//            List<String> titles = bean.getData()
+//                    .stream()
+//                    .map(BannerBean.DataBean::getTitle)
+//                    .collect(Collectors.toList());
 
             mMainBanner.setBannerTitles(titles);
 
