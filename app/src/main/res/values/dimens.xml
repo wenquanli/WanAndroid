@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="banner_height">200dp</dimen>
+    <dimen name="card_view_corner_radius">12dp</dimen>
+    <dimen name="card_view_margin">15dp</dimen>
+    <dimen name="card_view_elevation">10dp</dimen>
+    <dimen name="article_item_constrain_margin">10dp</dimen>
+    <dimen name="article_item_text_margin_top">15dp</dimen>
+    <dimen name="article_item_collection">30dp</dimen>
+</resources>

@@ -1,8 +1,11 @@
 package com.example.wanandroid.fragments;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
-import com.example.wanandroid.Constant.Constant;
+import com.example.wanandroid.adapter.MainArticleAdapter;
+import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.constant.Constant;
 import com.example.wanandroid.R;
 import com.example.wanandroid.base.BaseFragment;
 import com.example.wanandroid.bean.BannerBean;
@@ -15,11 +18,15 @@ import com.youth.banner.BannerConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter> implements Contract.IMainView{
     @BindView(R.id.main_banner)
     Banner mMainBanner;
+    @BindView(R.id.article_content)
+    RecyclerView recyclerView;
     public HomeFragment() {
     }
 
@@ -36,6 +43,7 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
     @Override
     protected void init() {
         presenter.loadBanner();
+        presenter.loadArticle();
         Log.d("HomeFragment","start loading");
     }
 
@@ -51,12 +59,6 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
             //设置banner样式
             mMainBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
 
-            //获取图片路径
-//            List<String> images = bean.getData()
-//                    .stream()
-//                    .map(BannerBean.DataBean::getImagePath)
-//                    .collect(Collectors.toList());
-
             ArrayList<String> images = new ArrayList<>();
             List<String> titles = new ArrayList<>();
             List<BannerBean.DataBean> data = bean.getData();
@@ -66,20 +68,19 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
             }
 
             mMainBanner.setImages(images);
-
-            //获取title
-            // TODO lambda 表达式虽然很简单，但不应该以此去浪费 SDK 版本 24 以下的用户，
-            //  而且这里实际上多执行了一次循环是没必要的，Java 和 Kotlin 这里应该都有正确的 lambda 去做过率
-//            List<String> titles = bean.getData()
-//                    .stream()
-//                    .map(BannerBean.DataBean::getTitle)
-//                    .collect(Collectors.toList());
-
             mMainBanner.setBannerTitles(titles);
-
-
             mMainBanner.start();
         }
 
+    }
+
+    @Override
+    public void loadArticle(MainArticleBean mainArticleBean) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        if(mainArticleBean.getErrorCode() == 0){
+            MainArticleAdapter adapter = new MainArticleAdapter(recyclerView);
+            adapter.setmBean(mainArticleBean);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.wanandroid.Constant;
+package com.example.wanandroid.constant;
 
 public class Constant {
     /**

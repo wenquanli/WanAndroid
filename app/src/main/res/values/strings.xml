@@ -5,6 +5,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="article_author">作者：%1$s</string>
+    <string name="article_sharer">分享者：%1$s</string>
+    <string name="article_category">分类：%1$s/%2$s</string>
+
     <!-- 主页 -->
     <string name="menu_home">首页</string>
     <string name="menu_community">社区</string>

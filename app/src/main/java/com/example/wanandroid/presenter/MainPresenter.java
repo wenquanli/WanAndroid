@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.wanandroid.base.BasePresenter;
 import com.example.wanandroid.bean.BannerBean;
+import com.example.wanandroid.bean.MainArticleBean;
 import com.example.wanandroid.contract.Contract;
 import com.example.wanandroid.model.MainModel;
 
@@ -42,6 +43,36 @@ public class MainPresenter extends BasePresenter<Contract.IMainView> implements 
                     @Override
                     public void onError(Throwable e) {
                         Log.d("MainPresenter", "loading failed");
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void loadArticle() {
+        mModel.loadArticle(0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MainArticleBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(MainArticleBean bean) {
+                        if (isViewAttached()) {
+                            getView().loadArticle(bean);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         e.printStackTrace();
                     }
 

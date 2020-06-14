@@ -10,5 +10,9 @@
        android:layout_width="match_parent"
        android:layout_height="200dp"
        android:id="@+id/main_banner"/>
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/article_content"/>
 
 </LinearLayout>
