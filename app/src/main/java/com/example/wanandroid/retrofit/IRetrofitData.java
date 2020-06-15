@@ -12,4 +12,6 @@ public interface IRetrofitData {
     Observable<BannerBean> loadBanner();
     @GET("article/list/{number}/json")
     Observable<MainArticleBean> loadArticle(@Path("number") int number);
+    @GET("article/list/0/json")
+    Observable<MainArticleBean> refreshMainArticle();
 }

@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.HomeFragment">
-
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   android:orientation="vertical">
+   <com.google.android.material.appbar.CollapsingToolbarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+      app:layout_scrollFlags="scroll|snap">
    <com.youth.banner.Banner
        android:layout_width="match_parent"
        android:layout_height="200dp"
        android:id="@+id/main_banner"/>
-   <androidx.recyclerview.widget.RecyclerView
+   </com.google.android.material.appbar.CollapsingToolbarLayout>
+</com.google.android.material.appbar.AppBarLayout>
+   <com.scwang.smartrefresh.layout.SmartRefreshLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:id="@+id/article_content"/>
+       android:id="@+id/refresh_layout"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior">
+       <com.scwang.smartrefresh.layout.header.ClassicsHeader
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/article_content"/>
+      <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+   </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

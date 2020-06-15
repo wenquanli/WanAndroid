@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.wanandroid.R;
 import com.example.wanandroid.activity.WebViewActivity;
-import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.bean.MainArticleBean.DataBean.DatasBean;
 
 import java.util.List;
 
@@ -25,16 +25,14 @@ import butterknife.ButterKnife;
 
 public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.ViewHolder> {
     private Context mContext;
-    private List<MainArticleBean.DataBean.DatasBean> articleList;
+    private List<DatasBean> articleList;
 
 
-    public MainArticleAdapter(RecyclerView recyclerView) {
+    public MainArticleAdapter(RecyclerView recyclerView, List<DatasBean> articles) {
         mContext = recyclerView.getContext();
+        articleList = articles;
     }
 
-    public void setmBean(MainArticleBean bean) {
-        this.articleList = bean.getData().getDatas();
-    }
 
 
     @NonNull
@@ -50,7 +48,7 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(articleList != null) {
-            MainArticleBean.DataBean.DatasBean article = articleList.get(position);
+            DatasBean article = articleList.get(position);
             holder.mArticleTitle.setText(Html.fromHtml(article.getTitle(),Html.FROM_HTML_MODE_COMPACT));
             holder.mArticleTime.setText(article.getNiceDate());
             if((article.getAuthor().length() == 0) || (article.getAuthor() == null)) {
@@ -64,7 +62,7 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
             holder.articleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainArticleBean.DataBean.DatasBean article = articleList.get(position);
+                    DatasBean article = articleList.get(position);
                     WebViewActivity.actionStart(mContext, article.getTitle(), article.getLink());
 
                 }

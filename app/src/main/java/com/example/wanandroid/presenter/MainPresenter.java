@@ -54,8 +54,8 @@ public class MainPresenter extends BasePresenter<Contract.IMainView> implements 
     }
 
     @Override
-    public void loadArticle() {
-        mModel.loadArticle(0)
+    public void loadArticle(int page) {
+        mModel.loadArticle(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MainArticleBean>() {
@@ -79,6 +79,41 @@ public class MainPresenter extends BasePresenter<Contract.IMainView> implements 
                     @Override
                     public void onComplete() {
 
+                    }
+                });
+    }
+
+    @Override
+    public void refreshArticle() {
+        mModel.refresh()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MainArticleBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(MainArticleBean bean) {
+                        if (isViewAttached()) {
+                            getView().refreshArticle(bean);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (isViewAttached()) {
+                            getView().onComplete();
+                        }
                     }
                 });
     }
