@@ -1,6 +1,7 @@
 package com.example.wanandroid.fragments;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.example.wanandroid.adapter.MainArticleAdapter;

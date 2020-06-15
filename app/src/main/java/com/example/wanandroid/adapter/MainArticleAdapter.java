@@ -3,13 +3,16 @@ package com.example.wanandroid.adapter;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wanandroid.R;
+import com.example.wanandroid.activity.WebViewActivity;
 import com.example.wanandroid.bean.MainArticleBean;
 
 import java.util.List;
@@ -23,6 +26,8 @@ import butterknife.ButterKnife;
 public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.ViewHolder> {
     private Context mContext;
     private List<MainArticleBean.DataBean.DatasBean> articleList;
+
+
     public MainArticleAdapter(RecyclerView recyclerView) {
         mContext = recyclerView.getContext();
     }
@@ -31,11 +36,14 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
         this.articleList = bean.getData().getDatas();
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+
+        return holder;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -53,9 +61,22 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
 
             String category = String.format(mContext.getResources().getString(R.string.article_category),article.getSuperChapterName(),article.getChapterName());
             holder.mArticleClassify.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
+            holder.articleView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainArticleBean.DataBean.DatasBean article = articleList.get(position);
+                    WebViewActivity.actionStart(mContext, article.getTitle(), article.getLink());
+
+                }
+            });
+            holder.mArticleCollection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext,"you clicked collection", Toast.LENGTH_SHORT).show();
+                    Log.d("MainArticleAdapter", "clicked collection successed");
+                }
+            });
         }
-
-
     }
 
     @Override
@@ -64,6 +85,7 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        View articleView;
         @BindView(R.id.article_title)
         TextView mArticleTitle;
         @BindView(R.id.article_author)
@@ -75,8 +97,10 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
         @BindView(R.id.article_time)
         TextView mArticleTime;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            articleView = itemView;
             ButterKnife.bind(this, itemView);
         }
     }

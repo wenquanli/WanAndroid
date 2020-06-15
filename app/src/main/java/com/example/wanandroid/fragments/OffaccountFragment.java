@@ -59,7 +59,5 @@ public class OffaccountFragment extends androidx.fragment.app.Fragment {
 
         adaper.setList(names);
         return view;
-
-
     }
 }
