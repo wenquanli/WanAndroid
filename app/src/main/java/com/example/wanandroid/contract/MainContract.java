@@ -5,7 +5,7 @@ import com.example.wanandroid.bean.MainArticleBean;
 
 import io.reactivex.Observable;
 
-public class Contract {
+public class MainContract {
     public interface IBaseView {
         /**
          * <p>加载错误回调</p>
@@ -36,7 +36,5 @@ public class Contract {
         void loadBanner();
         void loadArticle(int num);
         void refreshArticle();
-
-
     }
 }

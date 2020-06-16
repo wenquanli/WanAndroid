@@ -20,6 +20,7 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     protected abstract P createPresenter();
     protected abstract int getLayoutId();
     protected abstract void init();
+    protected abstract void initListener();
 
     @Nullable
     @Override
@@ -36,7 +37,6 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     @Override
     public void onResume() {
         super.onResume();
-        initListener();
     }
 
     @Override
@@ -50,8 +50,7 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         }
     }
 
-    private void initListener() {
-    }
+
 
 
 }

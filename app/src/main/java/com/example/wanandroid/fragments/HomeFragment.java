@@ -8,13 +8,12 @@ import com.example.wanandroid.constant.Constant;
 import com.example.wanandroid.R;
 import com.example.wanandroid.base.BaseFragment;
 import com.example.wanandroid.bean.BannerBean;
-import com.example.wanandroid.contract.Contract;
+import com.example.wanandroid.contract.MainContract;
 import com.example.wanandroid.presenter.MainPresenter;
 import com.example.wanandroid.util.GlideImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -26,7 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter> implements Contract.IMainView{
+public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPresenter> implements MainContract.IMainView{
     @BindView(R.id.main_banner)
     Banner mMainBanner;
     @BindView(R.id.article_content)
@@ -70,7 +69,10 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
         adapter = new MainArticleAdapter(recyclerView, articleList);
         recyclerView.setAdapter(adapter);
     }
-    private void initListener() {
+
+
+    @Override
+    protected void initListener() {
         refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -86,7 +88,14 @@ public class HomeFragment extends BaseFragment<Contract.IMainView, MainPresenter
             }
         });
     }
+
+    /**
+     * 加这两行代码的原因是目前的fragment管理是replace的，所以不清理的话就会越来越多，后面要改成hide模式的
+     */
+    //Todo fragment的管理模式
     private void initData() {
+        mBannerUrls.clear();
+        mTitles.clear();
         presenter.loadBanner();
         presenter.refreshArticle();
     }

@@ -3,6 +3,7 @@ package com.example.wanandroid.adapter;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.fragments.OffaccountContentFragment;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class OffaccountContentFragmentAdaper extends FragmentPagerAdapter {
-    private List<String> names;
+    private List<OffAccountBean.DataBean> names;
 
     public OffaccountContentFragmentAdaper(FragmentManager childFragmentManager) {
         super(childFragmentManager);
@@ -26,7 +27,7 @@ public class OffaccountContentFragmentAdaper extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         OffaccountContentFragment offaccountContentFragment = new OffaccountContentFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("name", this.names.get(position));
+        bundle.putInt("id", this.names.get(position).getId());
         offaccountContentFragment.setArguments(bundle);
         return offaccountContentFragment;
     }
@@ -41,14 +42,14 @@ public class OffaccountContentFragmentAdaper extends FragmentPagerAdapter {
         return false;
     }
 
-    public void setList(List<String> names) {
+    public void setList(List<OffAccountBean.DataBean> names) {
         this.names.clear();
         this.names.addAll(names);
         notifyDataSetChanged();
     }
     @Override
     public CharSequence getPageTitle(int position) {
-        String plateName = names.get(position);
+        String plateName = names.get(position).getName();
         if (plateName == null) {
             plateName = "";
         } else if (plateName.length() > 15) {

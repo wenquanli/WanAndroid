@@ -8,13 +8,13 @@
     tools:context=".fragments.OffaccountFragment">
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="?attr/actionBarSize"
         android:id="@+id/offaccount_tab_layout"
         app:tabBackground="@color/white"
         app:tabIndicatorColor="@color/menu_bule"
         app:tabIndicatorHeight="1dp"
         app:tabMode="scrollable"
-        app:tabMinWidth="40dp"
+        app:tabMinWidth="50dp"
         app:tabPaddingStart="5dp"
         app:tabPaddingEnd="5dp"
         app:tabSelectedTextColor="@color/menu_bule"

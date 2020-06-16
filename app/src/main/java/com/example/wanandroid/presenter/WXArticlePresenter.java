@@ -3,82 +3,49 @@ package com.example.wanandroid.presenter;
 import android.util.Log;
 
 import com.example.wanandroid.base.BasePresenter;
-import com.example.wanandroid.bean.BannerBean;
-import com.example.wanandroid.bean.MainArticleBean;
-import com.example.wanandroid.contract.MainContract;
-import com.example.wanandroid.model.MainModel;
+import com.example.wanandroid.bean.WXArticleBean;
+import com.example.wanandroid.contract.OffAccountContract;
+import com.example.wanandroid.model.WXArticleModel;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainPresenter extends BasePresenter<MainContract.IMainView> implements MainContract.IMainPresenter {
-    MainContract.IMainModel mModel;
+public class WXArticlePresenter extends BasePresenter<OffAccountContract.IWXArticleView> implements OffAccountContract.IWXArticlePresenter {
+    OffAccountContract.IWXArticleModel mModel;
 
-    public MainPresenter() {
-        mModel = new MainModel();
+    public WXArticlePresenter() {
+        this.mModel = new WXArticleModel();
     }
 
     @Override
-    public void loadBanner() {
-
-        mModel.loadBanner()
+    public void loadWXArticle(int chapter, int page) {
+        mModel.loadWXArticle(chapter,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BannerBean>() {
+                .subscribe(new Observer<WXArticleBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(BannerBean bean) {
-                        Log.d("MainPresenter", "loading successed");
+                    public void onNext(WXArticleBean bean) {
+                        Log.d("WXArticlePresenter", "loading wxarticle success");
                         if (isViewAttached()) {
-                            getView().loadBanner(bean);
+                            getView().loadWXArticle(bean);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("MainPresenter", "loading failed");
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    @Override
-    public void loadArticle(int page) {
-        mModel.loadArticle(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MainArticleBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(MainArticleBean bean) {
-                        if (isViewAttached()) {
-                            getView().loadArticle(bean);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
+                        Log.d("WXArticlePresenter", "loading wxarticle faild");
                         e.printStackTrace();
                         if (isViewAttached()) {
                             getView().onError(e);
                         }
                     }
-                    //如果没有这个处理步骤的话一直会卡在下拉加载进度条上
                     @Override
                     public void onComplete() {
                         if (isViewAttached()) {
@@ -89,25 +56,28 @@ public class MainPresenter extends BasePresenter<MainContract.IMainView> impleme
     }
 
     @Override
-    public void refreshArticle() {
-        mModel.refresh()
+    public void refreshWXArticle(int chapter) {
+        mModel.refreshWXArticle(chapter)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MainArticleBean>() {
+                .subscribe(new Observer<WXArticleBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(MainArticleBean bean) {
+                    public void onNext(WXArticleBean bean) {
                         if (isViewAttached()) {
-                            getView().refreshArticle(bean);
+                            getView().refreshWXArticle(bean);
                         }
+                        Log.d("WXArticlePresenter", "refresh wxarticle successed" + bean.getData().toString());
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.d("WXArticlePresenter", "refresh wxarticle failed");
                         e.printStackTrace();
                         if (isViewAttached()) {
                             getView().onError(e);
@@ -121,6 +91,6 @@ public class MainPresenter extends BasePresenter<MainContract.IMainView> impleme
                         }
                     }
                 });
+
     }
 }
-
