@@ -74,11 +74,16 @@ public class MainPresenter extends BasePresenter<Contract.IMainView> implements 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onError(e);
+                        }
                     }
-
+//如果没有这个处理步骤的话一直会卡在下拉加载进度条上
                     @Override
                     public void onComplete() {
-
+                        if (isViewAttached()) {
+                            getView().onComplete();
+                        }
                     }
                 });
     }
