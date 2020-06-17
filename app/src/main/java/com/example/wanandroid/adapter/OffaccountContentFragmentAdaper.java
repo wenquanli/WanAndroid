@@ -37,10 +37,6 @@ public class OffaccountContentFragmentAdaper extends FragmentPagerAdapter {
         return this.names.size();
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
-    }
 
     public void setList(List<OffAccountBean.DataBean> names) {
         this.names.clear();

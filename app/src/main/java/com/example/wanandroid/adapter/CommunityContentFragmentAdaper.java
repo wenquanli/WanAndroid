@@ -1,6 +1,7 @@
 package com.example.wanandroid.adapter;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import com.example.wanandroid.fragments.CommunityContentFragment;
@@ -37,10 +38,6 @@ public class CommunityContentFragmentAdaper extends FragmentPagerAdapter {
         return this.names.size();
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
-    }
 
     public void setList(List<String> names) {
         this.names.clear();
@@ -57,4 +54,5 @@ public class CommunityContentFragmentAdaper extends FragmentPagerAdapter {
         }
         return plateName;
     }
+
 }

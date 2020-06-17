@@ -25,8 +25,6 @@ import butterknife.BindView;
 
 
 public class OffaccountContentFragment extends BaseFragment<OffAccountContract.IWXArticleView, WXArticlePresenter> implements OffAccountContract.IWXArticleView{
-    @BindView(R.id.test_content)
-    TextView textView;
     @BindView(R.id.wxarticle_content)
     RecyclerView recyclerView;
     @BindView(R.id.wxarticle_refresh_layout)
@@ -51,7 +49,6 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
         initArticleRecycle();
         initListener();
         initData();
-        textView.setText(String.valueOf(chapterId));
     }
 
     private void initData() {
