@@ -29,11 +29,11 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     @BindView(R.id.main_banner)
     Banner mMainBanner;
     @BindView(R.id.article_content)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout)
-    SmartRefreshLayout refreshLayout;
+    SmartRefreshLayout mRefreshLayout;
     MainArticleAdapter adapter;
-    List<MainArticleBean.DataBean.DatasBean> articleList = new ArrayList<>();
+    List<MainArticleBean.DataBean.DatasBean> mArticleList = new ArrayList<>();
     List<String> mBannerUrls = new ArrayList<>();
     List<String> mTitles = new ArrayList<>();
     int curPage = 0;
@@ -65,26 +65,26 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
         mMainBanner.start();
     }
     private void initArticleRecycle() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new MainArticleAdapter(recyclerView, articleList);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        adapter = new MainArticleAdapter(mRecyclerView, mArticleList);
+        mRecyclerView.setAdapter(adapter);
     }
 
 
     @Override
     protected void initListener() {
-        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+        mRefreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 curPage++;
-                presenter.loadArticle(curPage);
+                mPresenter.loadArticle(curPage);
             }
         });
-        refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
+        mRefreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 curPage = 0;
-                presenter.refreshArticle();
+                mPresenter.refreshArticle();
             }
         });
     }
@@ -92,12 +92,12 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     /**
      * 加这两行代码的原因是目前的fragment管理是replace的，所以不清理的话就会越来越多，后面要改成hide模式的
      */
-    //Todo fragment的管理模式
+    //Todo fragment的
     private void initData() {
         mBannerUrls.clear();
         mTitles.clear();
-        presenter.loadBanner();
-        presenter.refreshArticle();
+        mPresenter.loadBanner();
+        mPresenter.refreshArticle();
     }
 
 
@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     public void loadArticle(MainArticleBean mainArticleBean) {
 
         if(mainArticleBean.getErrorCode() == 0){
-            articleList.addAll(mainArticleBean.getData().getDatas());
+            mArticleList.addAll(mainArticleBean.getData().getDatas());
             adapter.notifyDataSetChanged();
         }
     }
@@ -130,8 +130,8 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     @Override
     public void refreshArticle(MainArticleBean mainArticleBean) {
         if(mainArticleBean.getErrorCode() == 0){
-            articleList.clear();
-            articleList.addAll(mainArticleBean.getData().getDatas());
+            mArticleList.clear();
+            mArticleList.addAll(mainArticleBean.getData().getDatas());
             adapter.notifyDataSetChanged();
         }
     }
@@ -139,16 +139,16 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     @Override
     public void onError(Throwable e) {
         //加载
-        if (refreshLayout.getState() == RefreshState.Loading) {
+        if (mRefreshLayout.getState() == RefreshState.Loading) {
 
-            refreshLayout.finishLoadMore();
+            mRefreshLayout.finishLoadMore();
             curPage--;
         }
 
         //刷新
-        if (refreshLayout.getState() == RefreshState.Refreshing) {
+        if (mRefreshLayout.getState() == RefreshState.Refreshing) {
 
-            refreshLayout.finishRefresh();
+            mRefreshLayout.finishRefresh();
         }
 
     }
@@ -156,22 +156,22 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
     @Override
     public void onComplete() {
         //加载
-        if (refreshLayout.getState() == RefreshState.Loading) {
+        if (mRefreshLayout.getState() == RefreshState.Loading) {
 
-            refreshLayout.finishLoadMore();
+            mRefreshLayout.finishLoadMore();
         }
 
         //刷新
-        if (refreshLayout.getState() == RefreshState.Refreshing) {
+        if (mRefreshLayout.getState() == RefreshState.Refreshing) {
 
-            refreshLayout.finishRefresh();
+            mRefreshLayout.finishRefresh();
         }
     }
     @Override
     public void onPause() {
         super.onPause();
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
+        mRefreshLayout.finishRefresh();
+        mRefreshLayout.finishLoadMore();
     }
 
 }

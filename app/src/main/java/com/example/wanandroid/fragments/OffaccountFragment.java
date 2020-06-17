@@ -17,16 +17,16 @@ import butterknife.BindView;
 
 public class OffaccountFragment extends BaseFragment<OffAccountContract.IOffAccountView, OffAccountPresenter> implements OffAccountContract.IOffAccountView{
     @BindView(R.id.offaccount_tab_layout)
-    TabLayout tabLayout;
+    TabLayout mTabLayout;
     @BindView(R.id.offaccount_view_pages)
-    ViewPager viewPager;
+    ViewPager mViewPager;
     private OffaccountContentFragmentAdaper adaper;
-    private List<OffAccountBean.DataBean> names = new ArrayList<>();
+    private List<OffAccountBean.DataBean> mAccoutNames = new ArrayList<>();
     public OffaccountFragment() {
     }
 
     private void initData() {
-        presenter.loadOffAccount();
+        mPresenter.loadOffAccount();
     }
 
     @Override
@@ -42,8 +42,8 @@ public class OffaccountFragment extends BaseFragment<OffAccountContract.IOffAcco
     @Override
     protected void init() {
         adaper = new OffaccountContentFragmentAdaper(getChildFragmentManager());
-        viewPager.setAdapter(adaper);
-        tabLayout.setupWithViewPager(viewPager);
+        mViewPager.setAdapter(adaper);
+        mTabLayout.setupWithViewPager(mViewPager);
         initData();
 
     }
@@ -56,8 +56,8 @@ public class OffaccountFragment extends BaseFragment<OffAccountContract.IOffAcco
     @Override
     public void loadOffAccount(OffAccountBean offAccountBean) {
         if (offAccountBean.getErrorCode() == Constant.BANNER_SUCCESS) {
-            names = offAccountBean.getData();
-            adaper.setList(names);
+            mAccoutNames = offAccountBean.getData();
+            adaper.setList(mAccoutNames);
         }
     }
 }

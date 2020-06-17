@@ -8,20 +8,20 @@
     tools:context=".fragments.CommunityFragment">
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="?attr/actionBarSize"
         android:id="@+id/community_tab_layout"
-        android:background="@color/white"
-        app:tabBackground="@color/white"
+        android:background="@color/colorPrimary"
+        app:tabBackground="@color/colorPrimary"
         app:tabGravity="center"
-        app:tabIndicatorColor="@color/menu_bule"
-        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabMinWidth="40dp"
         app:tabPaddingStart="5dp"
         app:tabPaddingEnd="5dp"
-        app:tabSelectedTextColor="@color/menu_bule"
+        app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/tab_head"
-        app:tabTextColor="@color/wx_head_default"/>
+        app:tabTextColor="@color/white"/>
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"

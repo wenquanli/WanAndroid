@@ -15,7 +15,7 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     private Unbinder unbinder;
     protected Context mContext;
 
-    protected P presenter;
+    protected P mPresenter;
 
     protected abstract P createPresenter();
     protected abstract int getLayoutId();
@@ -29,8 +29,8 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         unbinder = ButterKnife.bind(this, view);
         //得到context,在后面的子类Fragment中都可以直接调用
         mContext = getActivity();
-        presenter = createPresenter();
-        presenter.attachView((V) this);
+        mPresenter = createPresenter();
+        mPresenter.attachView((V) this);
         init();
         return view;
     }
@@ -45,8 +45,8 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         //do something
         unbinder.unbind();
         //销毁时，解除绑定
-        if (presenter != null) {
-            presenter.detachView();
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 

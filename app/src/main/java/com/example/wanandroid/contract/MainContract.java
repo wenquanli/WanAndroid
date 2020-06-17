@@ -21,7 +21,7 @@ public class MainContract {
 
     public interface IMainModel{
         Observable<BannerBean> loadBanner();
-        Observable<MainArticleBean> loadArticle(int num);
+        Observable<MainArticleBean> loadArticle(int page);
         Observable<MainArticleBean> refresh();
 
     }
@@ -34,7 +34,7 @@ public class MainContract {
 
     public interface IMainPresenter{
         void loadBanner();
-        void loadArticle(int num);
+        void loadArticle(int page);
         void refreshArticle();
     }
 }

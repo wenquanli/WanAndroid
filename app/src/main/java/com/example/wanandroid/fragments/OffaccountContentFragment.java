@@ -2,7 +2,6 @@ package com.example.wanandroid.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.wanandroid.R;
 import com.example.wanandroid.adapter.WXArticleAdapter;
@@ -53,7 +52,7 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
 
     private void initData() {
         Log.d("OffContentFrag","started init data, chapterId is" + chapterId);
-        presenter.refreshWXArticle(chapterId);
+        mPresenter.refreshWXArticle(chapterId);
     }
 
     private void initArticleRecycle() {
@@ -68,14 +67,14 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 curPage++;
-                presenter.loadWXArticle(chapterId,curPage);
+                mPresenter.loadWXArticle(chapterId,curPage);
             }
         });
         refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 curPage = 0;
-                presenter.refreshWXArticle(chapterId);
+                mPresenter.refreshWXArticle(chapterId);
             }
         });
     }
@@ -130,14 +129,11 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
 
     @Override
     public void refreshWXArticle(WXArticleBean wXArticleBean) {
-        Log.d("OffContentFrag","started refresh data in adapter");
         if(wXArticleBean.getErrorCode() == 0){
             articleList.clear();
             articleList.addAll(wXArticleBean.getData().getDatas());
-            Log.d("OffContentFrag","data size is" + wXArticleBean.getData().getDatas().size());
             adapter.notifyDataSetChanged();
         }
-        Log.d("OffContentFrag","finished refresh data in adapter");
     }
     @Override
     public void onPause() {

@@ -13,15 +13,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class OffAccountPresenter extends BasePresenter<OffAccountContract.IOffAccountView> implements OffAccountContract.IOffAccountPresenter{
-    OffAccountContract.IOffAccountModel model;
+    OffAccountContract.IOffAccountModel mModel;
 
     public OffAccountPresenter() {
-        this.model = new OffAccountModel();
+        this.mModel = new OffAccountModel();
     }
 
     @Override
     public void loadOffAccount() {
-        model.loadOffAccount()
+        mModel.loadOffAccount()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<OffAccountBean>() {
