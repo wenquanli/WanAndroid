@@ -89,22 +89,25 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
         });
     }
 
-    /**
-     * 加这两行代码的原因是目前的fragment管理是replace的，所以不清理的话就会越来越多，后面要改成hide模式的
-     */
-    //Todo fragment的
+
+
     private void initData() {
-        mBannerUrls.clear();
-        mTitles.clear();
         mPresenter.loadBanner();
         mPresenter.refreshArticle();
     }
 
-
+    /**
+     * 加这两行代码的原因是目前的fragment管理是replace的，所以不清理的话就会越来越多，后面要改成hide模式的
+     * banner这个有bug呀，会偶尔崩，取回数据之后再操作UI后不崩了，但是会有时候加载不出图片来，看来之后的优化
+     * 得考fragment管理和图片的缓存了。
+     */
+    //Todo fragment的管理
     @Override
     public void loadBanner(BannerBean bean) {
         if (bean.getErrorCode() == Constant.BANNER_SUCCESS) {
             List<BannerBean.DataBean> data = bean.getData();
+            mBannerUrls.clear();
+            mTitles.clear();
             for (int i = 0; i < data.size(); i++) {
                 mBannerUrls.add(data.get(i).getImagePath());
                 mTitles.add(data.get(i).getTitle());
