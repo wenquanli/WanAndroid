@@ -67,6 +67,7 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
 
                 }
             });
+            //todo 写上收藏监听
             holder.mArticleCollection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

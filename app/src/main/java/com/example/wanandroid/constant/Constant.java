@@ -3,6 +3,8 @@ package com.example.wanandroid.constant;
 public class Constant {
     public static final String BASE_URL = "https://www.wanandroid.com/";
 
+    public static final int LOGIN_EXPIRED = -1001;
+
     /**
      * banner获取成功
      */
