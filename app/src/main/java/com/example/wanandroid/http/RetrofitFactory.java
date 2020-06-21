@@ -1,6 +1,8 @@
 package com.example.wanandroid.http;
 
 import com.example.wanandroid.base.BaseObeserver;
+import com.example.wanandroid.bean.BannerBean;
+import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.UserBean;
 
 import java.util.concurrent.TimeUnit;
@@ -74,6 +76,12 @@ public class RetrofitFactory {
     public void login(String username, String  password, BaseObeserver<UserBean.DataBean> scheduler) {
         API()
                 .login(username,password)
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loginOut(BaseObeserver<BaseBean.DataBean> scheduler) {
+        API()
+                .loginOut()
                 .compose(threadTransformer())
                 .subscribe(scheduler);
     }
