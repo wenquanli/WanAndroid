@@ -4,8 +4,12 @@ import com.example.wanandroid.base.BaseObeserver;
 import com.example.wanandroid.bean.BannerBean;
 import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.CoinBean;
+import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.UserBean;
+import com.example.wanandroid.bean.WXArticleBean;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -89,6 +93,43 @@ public class RetrofitFactory {
     public void loadCoinInfo(BaseObeserver<CoinBean.DataBean> scheduler) {
         API()
                 .loadCoinInfo()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+
+    public void loadBanner(BaseObeserver<List<BannerBean.DataBean>> scheduler) {
+        API()
+                .loadBanner()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loadMainArticle(int page,BaseObeserver<MainArticleBean.DataBean> scheduler) {
+        API()
+                .loadArticle(page)
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void refreshMainArticle(BaseObeserver<MainArticleBean.DataBean> scheduler) {
+        API()
+                .refreshMainArticle()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loadOffAccount(BaseObeserver<List<OffAccountBean.DataBean>> scheduler) {
+        API()
+                .loadOffAccount()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loadWXMainArticle(int chapter, int page,BaseObeserver<WXArticleBean.DataBean> scheduler) {
+        API()
+                .loadWXArticle(chapter,page)
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void refreshWXMainArticle(int chapter, BaseObeserver<WXArticleBean.DataBean> scheduler) {
+        API()
+                .refreshWXArticle(chapter)
                 .compose(threadTransformer())
                 .subscribe(scheduler);
     }

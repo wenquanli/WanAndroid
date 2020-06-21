@@ -3,9 +3,12 @@ package com.example.wanandroid.presenter;
 import android.util.Log;
 
 import com.example.wanandroid.base.BasePresenter;
+import com.example.wanandroid.base.OnLoadDatasListener;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.contract.OffAccountContract;
 import com.example.wanandroid.model.OffAccountModel;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,33 +24,16 @@ public class OffAccountPresenter extends BasePresenter<OffAccountContract.IOffAc
 
     @Override
     public void loadOffAccount() {
-        mModel.loadOffAccount()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<OffAccountBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
+        mModel.loadOffAccount(new OnLoadDatasListener<List<OffAccountBean.DataBean>>() {
+            @Override
+            public void onSuccess(List<OffAccountBean.DataBean> dataBeans) {
+                getView().loadOffAccount(dataBeans);
+            }
 
-                    @Override
-                    public void onNext(OffAccountBean bean) {
-                        Log.d("OffAccountPresenter", "loading offaccount successed");
-                        if (isViewAttached()) {
-                            getView().loadOffAccount(bean);
-                        }
-                    }
+            @Override
+            public void onFailure(String error) {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("OffAccountPresenter", "loading offaccount failed");
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+            }
+        });
     }
 }

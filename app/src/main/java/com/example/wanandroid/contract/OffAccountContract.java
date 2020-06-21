@@ -1,7 +1,10 @@
 package com.example.wanandroid.contract;
 
+import com.example.wanandroid.base.OnLoadDatasListener;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.WXArticleBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -12,7 +15,7 @@ public class OffAccountContract {
          * <p>加载错误回调</p>
          * @param e Throwable
          */
-        void onError(Throwable e);
+        void onError(String e);
 
         /**
          * <p>加载完成</p>
@@ -20,22 +23,22 @@ public class OffAccountContract {
         void onComplete();
     }
     public interface IOffAccountModel{
-        Observable<OffAccountBean> loadOffAccount();
+        public void loadOffAccount(OnLoadDatasListener<List<OffAccountBean.DataBean>> onLoadDatasListener);
     }
     public interface IOffAccountView {
-        void loadOffAccount(OffAccountBean offAccountBean);
+        void loadOffAccount(List<OffAccountBean.DataBean> offAccountBean);
     }
     public interface IOffAccountPresenter {
         void loadOffAccount();
     }
 
     public interface IWXArticleModel{
-        Observable<WXArticleBean> loadWXArticle(int chapter, int page);
-        Observable<WXArticleBean> refreshWXArticle(int chapter);
+        public void loadWXArticle(int chapter, int page, OnLoadDatasListener<WXArticleBean.DataBean> onLoadDatasListener);
+        public void refreshWXArticle(int chapter, OnLoadDatasListener<WXArticleBean.DataBean> onLoadDatasListener);
     }
     public interface IWXArticleView extends IBaseView{
-        void loadWXArticle(WXArticleBean wXArticleBean);
-        void refreshWXArticle(WXArticleBean wXArticleBean);
+        void loadWXArticle(WXArticleBean.DataBean wXArticleBean);
+        void refreshWXArticle(WXArticleBean.DataBean wXArticleBean);
     }
     public interface IWXArticlePresenter{
         void loadWXArticle(int chapter, int page);

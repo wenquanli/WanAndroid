@@ -103,44 +103,33 @@ public class HomeFragment extends BaseFragment<MainContract.IMainView, MainPrese
      */
     //Todo fragment的管理
     @Override
-    public void loadBanner(BannerBean bean) {
-        if (bean.getErrorCode() == Constant.BANNER_SUCCESS) {
-            List<BannerBean.DataBean> data = bean.getData();
-            mBannerUrls.clear();
-            mTitles.clear();
-            for (int i = 0; i < data.size(); i++) {
-                mBannerUrls.add(data.get(i).getImagePath());
-                mTitles.add(data.get(i).getTitle());
-            }
-            mMainBanner.setImages(mBannerUrls);
-            mMainBanner.setBannerTitles(mTitles);
-            mMainBanner.start();
-        }else {
-            Log.d("HomeFragment","load banner failed");
+    public void loadBanner(List<BannerBean.DataBean> beanList) {
+        mBannerUrls.clear();
+        mTitles.clear();
+        for (int i = 0; i < beanList.size(); i++) {
+            mBannerUrls.add(beanList.get(i).getImagePath());
+            mTitles.add(beanList.get(i).getTitle());
         }
-
+        mMainBanner.setImages(mBannerUrls);
+        mMainBanner.setBannerTitles(mTitles);
+        mMainBanner.start();
     }
 
     @Override
-    public void loadArticle(MainArticleBean mainArticleBean) {
-
-        if(mainArticleBean.getErrorCode() == 0){
-            mArticleList.addAll(mainArticleBean.getData().getDatas());
+    public void loadArticle(MainArticleBean.DataBean mainArticleBean) {
+            mArticleList.addAll(mainArticleBean.getDatas());
             adapter.notifyDataSetChanged();
-        }
     }
 
     @Override
-    public void refreshArticle(MainArticleBean mainArticleBean) {
-        if(mainArticleBean.getErrorCode() == 0){
-            mArticleList.clear();
-            mArticleList.addAll(mainArticleBean.getData().getDatas());
-            adapter.notifyDataSetChanged();
-        }
+    public void refreshArticle(MainArticleBean.DataBean mainArticleBean) {
+        mArticleList.clear();
+        mArticleList.addAll(mainArticleBean.getDatas());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(String error) {
         //加载
         if (mRefreshLayout.getState() == RefreshState.Loading) {
 

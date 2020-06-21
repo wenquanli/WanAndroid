@@ -54,10 +54,8 @@ public class OffaccountFragment extends BaseFragment<OffAccountContract.IOffAcco
     }
 
     @Override
-    public void loadOffAccount(OffAccountBean offAccountBean) {
-        if (offAccountBean.getErrorCode() == Constant.BANNER_SUCCESS) {
-            mAccoutNames = offAccountBean.getData();
+    public void loadOffAccount(List<OffAccountBean.DataBean> offAccountBean) {
+            mAccoutNames = offAccountBean;
             adaper.setList(mAccoutNames);
-        }
     }
 }

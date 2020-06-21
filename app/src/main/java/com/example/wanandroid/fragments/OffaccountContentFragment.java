@@ -89,7 +89,7 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
 
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(String e) {
         //加载
         if (refreshLayout.getState() == RefreshState.Loading) {
 
@@ -120,20 +120,16 @@ public class OffaccountContentFragment extends BaseFragment<OffAccountContract.I
     }
 
     @Override
-    public void loadWXArticle(WXArticleBean wXArticleBean) {
-        if(wXArticleBean.getErrorCode() == 0){
-            articleList.addAll(wXArticleBean.getData().getDatas());
-            adapter.notifyDataSetChanged();
-        }
+    public void loadWXArticle(WXArticleBean.DataBean wXArticleBeanList) {
+        articleList.addAll(wXArticleBeanList.getDatas());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void refreshWXArticle(WXArticleBean wXArticleBean) {
-        if(wXArticleBean.getErrorCode() == 0){
-            articleList.clear();
-            articleList.addAll(wXArticleBean.getData().getDatas());
-            adapter.notifyDataSetChanged();
-        }
+    public void refreshWXArticle(WXArticleBean.DataBean wXArticleBean) {
+        articleList.clear();
+        articleList.addAll(wXArticleBean.getDatas());
+        adapter.notifyDataSetChanged();
     }
     @Override
     public void onPause() {
