@@ -2,6 +2,7 @@ package com.example.wanandroid.http;
 
 import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.BaseResponse;
+import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.bean.UserBean;
 
 import io.reactivex.Observable;
@@ -32,4 +33,10 @@ public interface ApiService {
      */
     @GET("user/logout/json")
     Observable<BaseResponse<BaseBean.DataBean>> loginOut();
+    /***
+     * 积分信息
+     * @return
+     */
+    @GET("lg/coin/userinfo/json")
+    Observable<BaseResponse<CoinBean.DataBean>> loadCoinInfo();
 }

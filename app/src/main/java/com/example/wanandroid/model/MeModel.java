@@ -3,6 +3,7 @@ package com.example.wanandroid.model;
 import com.example.wanandroid.base.BaseObeserver;
 import com.example.wanandroid.base.OnLoadDatasListener;
 import com.example.wanandroid.bean.BaseBean;
+import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.contract.MeContract;
 import com.example.wanandroid.http.RetrofitFactory;
 
@@ -12,6 +13,21 @@ public class MeModel implements MeContract.IMeModel {
         RetrofitFactory.getInstence().loginOut(new BaseObeserver<BaseBean.DataBean>() {
             @Override
             protected void onSuccess(BaseBean.DataBean o) throws Exception {
+                onLoadDatasListener.onSuccess(o);
+            }
+
+            @Override
+            protected void onFailure(String error, boolean isNetworkError) throws Exception {
+                onLoadDatasListener.onFailure(error);
+            }
+        });
+    }
+
+    @Override
+    public void loadCoinInfo(OnLoadDatasListener<CoinBean.DataBean> onLoadDatasListener) {
+        RetrofitFactory.getInstence().loadCoinInfo(new BaseObeserver<CoinBean.DataBean>() {
+            @Override
+            protected void onSuccess(CoinBean.DataBean o) throws Exception {
                 onLoadDatasListener.onSuccess(o);
             }
 

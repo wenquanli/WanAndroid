@@ -3,6 +3,7 @@ package com.example.wanandroid.http;
 import com.example.wanandroid.base.BaseObeserver;
 import com.example.wanandroid.bean.BannerBean;
 import com.example.wanandroid.bean.BaseBean;
+import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.bean.UserBean;
 
 import java.util.concurrent.TimeUnit;
@@ -82,6 +83,12 @@ public class RetrofitFactory {
     public void loginOut(BaseObeserver<BaseBean.DataBean> scheduler) {
         API()
                 .loginOut()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loadCoinInfo(BaseObeserver<CoinBean.DataBean> scheduler) {
+        API()
+                .loadCoinInfo()
                 .compose(threadTransformer())
                 .subscribe(scheduler);
     }

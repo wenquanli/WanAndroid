@@ -3,6 +3,7 @@ package com.example.wanandroid.presenter;
 import com.example.wanandroid.base.BasePresenter;
 import com.example.wanandroid.base.OnLoadDatasListener;
 import com.example.wanandroid.bean.BaseBean;
+import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.contract.MeContract;
 import com.example.wanandroid.model.MeModel;
 
@@ -24,6 +25,21 @@ public class MePresenter extends BasePresenter<MeContract.IMeView> implements Me
             @Override
             public void onFailure(String error) {
                 getView().LoginOutFail();
+            }
+        });
+    }
+
+    @Override
+    public void loadCoin() {
+        meModel.loadCoinInfo(new OnLoadDatasListener<CoinBean.DataBean>() {
+            @Override
+            public void onSuccess(CoinBean.DataBean dataBean) {
+                getView().setCoinInfo(dataBean);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                getView().loadCoinInfoFailure();
             }
         });
     }

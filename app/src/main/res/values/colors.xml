@@ -15,10 +15,16 @@
     <color name="gray_text_light">#979797</color>
     <color name="window_half_transparent">#90000000</color>
     <color name="blue_white">#0eabe5</color>
+    <color name="background">#d8d8d8</color>
+    <color name="backgroundeee">#eeeeee</color>
 
     <!-- 主页 -->
     <color name="menu_gray">#8a8a8a</color>
     <color name="card_view_bg_color">#F0F0F0</color>
+    <!-- 我的 -->
+    <color name="colorBlack333">#333</color>
+    <color name="windowBackground">#F5F5F5</color>
+    <color name="textHint">#999999</color>
 
 
 </resources>
