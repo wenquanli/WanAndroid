@@ -6,6 +6,7 @@ import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.bean.KonwledgeHireBean;
 import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.bean.NavgationBean;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.UserBean;
 import com.example.wanandroid.bean.WXArticleBean;
@@ -138,6 +139,12 @@ public class RetrofitFactory {
     public void loadKonwledgeHeir(BaseObeserver<List<KonwledgeHireBean.DataBean>> scheduler) {
         API()
                 .loadKonwledgeHeir()
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+    public void loadNavgation(BaseObeserver<List<NavgationBean.DataBean>> scheduler) {
+        API()
+                .loadNavgation()
                 .compose(threadTransformer())
                 .subscribe(scheduler);
     }

@@ -6,6 +6,7 @@ import com.example.wanandroid.bean.BaseResponse;
 import com.example.wanandroid.bean.CoinBean;
 import com.example.wanandroid.bean.KonwledgeHireBean;
 import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.bean.NavgationBean;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.UserBean;
 import com.example.wanandroid.bean.WXArticleBean;
@@ -72,4 +73,9 @@ public interface ApiService {
      */
     @GET("tree/json")
     Observable<BaseResponse<List<KonwledgeHireBean.DataBean>>> loadKonwledgeHeir();
+    /**
+     *导航相关接口
+     */
+    @GET("navi/json")
+    Observable<BaseResponse<List<NavgationBean.DataBean>>> loadNavgation();
 }

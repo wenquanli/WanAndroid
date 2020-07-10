@@ -1,10 +1,5 @@
 package com.example.wanandroid.fragments;
 
-import android.view.View;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.wanandroid.R;
 import com.example.wanandroid.adapter.KonwledgeHireAdapter;
 import com.example.wanandroid.base.BaseFragment;
@@ -15,6 +10,8 @@ import com.example.wanandroid.presenter.KonwledgeHirePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class CommunityContentFragment extends BaseFragment<KonwledgeHierContract.IKonwledgeHireView, KonwledgeHirePresenter> implements KonwledgeHierContract.IKonwledgeHireView {
