@@ -67,4 +67,6 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-21'
     //
     implementation 'com.android.support:design:29.1.1'
+    //tagflowlayout
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
 }

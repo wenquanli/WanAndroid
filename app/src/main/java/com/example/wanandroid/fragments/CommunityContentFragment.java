@@ -1,43 +1,65 @@
 package com.example.wanandroid.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanandroid.R;
+import com.example.wanandroid.adapter.KonwledgeHireAdapter;
+import com.example.wanandroid.base.BaseFragment;
+import com.example.wanandroid.bean.KonwledgeHireBean;
+import com.example.wanandroid.contract.KonwledgeHierContract;
+import com.example.wanandroid.presenter.KonwledgeHirePresenter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class CommunityContentFragment extends Fragment {
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_community_context, container, false);
-        ButterKnife.bind(this, view);
+public class CommunityContentFragment extends BaseFragment<KonwledgeHierContract.IKonwledgeHireView, KonwledgeHirePresenter> implements KonwledgeHierContract.IKonwledgeHireView {
 
-        tvContent.setText(name);
-        return view;
-    }
-
-    @BindView(R.id.community_txt_content)
-    TextView tvContent;
-
-    private String name;
+    @BindView(R.id.klswiperecyclerview)
+    RecyclerView recyclerView;
+    KonwledgeHireAdapter adapter;
+    List<KonwledgeHireBean.DataBean> konwledgeHireList = new ArrayList<>();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        name = bundle.getString("name");
-        if (name == null) {
-            name = "参数非法";
-        }
+    protected KonwledgeHirePresenter createPresenter() {
+        return new KonwledgeHirePresenter();
     }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_community_context;
+    }
+
+    @Override
+    protected void init() {
+        initArticleRecycle();
+        initData();
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    private void initData() {
+        mPresenter.getDetailKnowledgeHier();
+    }
+
+    private void initArticleRecycle() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        adapter = new KonwledgeHireAdapter(recyclerView, konwledgeHireList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void updateDetailKnowledgeHier(List<KonwledgeHireBean.DataBean> beanList) {
+        konwledgeHireList.clear();
+        konwledgeHireList.addAll(beanList);
+        adapter.notifyDataSetChanged();
+    }
+
 }

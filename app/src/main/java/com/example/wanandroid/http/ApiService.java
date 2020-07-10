@@ -4,6 +4,7 @@ import com.example.wanandroid.bean.BannerBean;
 import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.BaseResponse;
 import com.example.wanandroid.bean.CoinBean;
+import com.example.wanandroid.bean.KonwledgeHireBean;
 import com.example.wanandroid.bean.MainArticleBean;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.UserBean;
@@ -66,4 +67,9 @@ public interface ApiService {
     Observable<BaseResponse<WXArticleBean.DataBean>> loadWXArticle(@Path("chapter") int chapter, @Path("page") int page);
     @GET("wxarticle/list/{chapter}/0/json")
     Observable<BaseResponse<WXArticleBean.DataBean>> refreshWXArticle(@Path("chapter") int chapter);
+    /**
+     *体系相关接口
+     */
+    @GET("tree/json")
+    Observable<BaseResponse<List<KonwledgeHireBean.DataBean>>> loadKonwledgeHeir();
 }

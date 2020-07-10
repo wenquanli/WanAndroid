@@ -4,6 +4,7 @@ import com.example.wanandroid.base.BaseObeserver;
 import com.example.wanandroid.bean.BannerBean;
 import com.example.wanandroid.bean.BaseBean;
 import com.example.wanandroid.bean.CoinBean;
+import com.example.wanandroid.bean.KonwledgeHireBean;
 import com.example.wanandroid.bean.MainArticleBean;
 import com.example.wanandroid.bean.OffAccountBean;
 import com.example.wanandroid.bean.UserBean;
@@ -130,6 +131,13 @@ public class RetrofitFactory {
     public void refreshWXMainArticle(int chapter, BaseObeserver<WXArticleBean.DataBean> scheduler) {
         API()
                 .refreshWXArticle(chapter)
+                .compose(threadTransformer())
+                .subscribe(scheduler);
+    }
+
+    public void loadKonwledgeHeir(BaseObeserver<List<KonwledgeHireBean.DataBean>> scheduler) {
+        API()
+                .loadKonwledgeHeir()
                 .compose(threadTransformer())
                 .subscribe(scheduler);
     }

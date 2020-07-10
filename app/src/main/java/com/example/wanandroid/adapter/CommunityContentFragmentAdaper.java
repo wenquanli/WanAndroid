@@ -1,11 +1,7 @@
 package com.example.wanandroid.adapter;
 
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.View;
-
 import com.example.wanandroid.fragments.CommunityContentFragment;
-import com.example.wanandroid.fragments.OffaccountContentFragment;
+import com.example.wanandroid.fragments.CommunityNavFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +22,17 @@ public class CommunityContentFragmentAdaper extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        CommunityContentFragment fragment = new CommunityContentFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", this.names.get(position));
-        fragment.setArguments(bundle);
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new CommunityContentFragment();
+                break;
+            case 1:
+                fragment = new CommunityNavFragment();
+                break;
+            default:
+                break;
+        }
         return fragment;
     }
 
